@@ -25,6 +25,80 @@
     .industries-extra a { color: #2b7cff; text-decoration: none; border-bottom: 1px dotted #2b7cff; }
     .industries-extra a:hover { color: #0b1b2b; border-bottom-style: solid; }
     .address-block { font-style: normal; line-height: 1.5; }
+
+    /* Hero photo banner — full-width image with overlay caption */
+    .hero-photo {
+      position: relative;
+      width: 100%;
+      height: clamp(280px, 38vw, 460px);
+      overflow: hidden;
+      background: #0b1b2b;
+    }
+    .hero-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 35%;
+      filter: brightness(0.72) saturate(1.05);
+    }
+    .hero-photo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(11,27,43,0.35) 0%, rgba(11,27,43,0.15) 40%, rgba(11,27,43,0.85) 100%),
+        linear-gradient(90deg, rgba(11,27,43,0.55) 0%, rgba(11,27,43,0) 50%);
+      pointer-events: none;
+    }
+    .hero-photo__overlay {
+      position: relative;
+      z-index: 2;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 2rem;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      color: #fff;
+    }
+    .hero-photo__pill {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      align-self: flex-start;
+      background: rgba(255, 215, 107, 0.95);
+      color: #0b1b2b;
+      padding: .4rem .9rem;
+      border-radius: 999px;
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      margin-bottom: .9rem;
+      text-transform: uppercase;
+    }
+    .hero-photo__title {
+      font-size: clamp(1.6rem, 3.4vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin: 0 0 .5rem;
+      max-width: 720px;
+      text-shadow: 0 2px 14px rgba(0,0,0,0.35);
+    }
+    .hero-photo__sub {
+      font-size: clamp(.95rem, 1.4vw, 1.1rem);
+      line-height: 1.5;
+      margin: 0;
+      max-width: 620px;
+      color: rgba(255,255,255,0.9);
+      text-shadow: 0 1px 8px rgba(0,0,0,0.3);
+    }
+    @media (max-width: 600px) {
+      .hero-photo { height: 320px; }
+      .hero-photo img { object-position: center 40%; }
+    }
   </style>
 </head>
 
@@ -66,6 +140,20 @@
 
   <!-- Hero -->
   <main>
+    <!-- Hero photo banner -->
+    <section class="hero-photo" aria-label="Featured ATM installation">
+      <img src="atm-installed.jpeg" alt="A Blue Sky next-generation ATM installed at a New York venue, supporting Apple Pay and tap-to-withdraw" />
+      <div class="hero-photo__overlay">
+        <span class="hero-photo__pill">
+          <span aria-hidden="true">●</span> Live install · New York, NY
+        </span>
+        <h2 class="hero-photo__title">Real next-gen ATMs at real NYC venues.</h2>
+        <p class="hero-photo__sub">
+          Apple Pay, Google Pay, and tap-to-withdraw — installed, monitored, and serviced by Blue Sky.
+        </p>
+      </div>
+    </section>
+
     <section class="hero">
       <div class="container hero__inner">
         <div class="hero__copy">
@@ -118,7 +206,11 @@
             <h2>Get an ATM at your location</h2>
             <p class="muted">No long forms. Tell us about your business — we'll follow up.</p>
 
-            <form class="form" id="leadForm" novalidate>
+            <form class="form" id="leadForm" name="placement-request" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+              <input type="hidden" name="form-name" value="placement-request" />
+              <p style="display:none;">
+                <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+              </p>
               <div class="grid-2">
                 <label>
                   Name
@@ -263,26 +355,15 @@
         </div>
 
         <div class="media-split">
-          <figure class="media-figure">
-            <img src="atm-installed.jpeg" alt="Blue Sky ATM installed at a NYC venue, with contactless tap support and Bitcoin option" loading="lazy" />
-            <figcaption>Installed and live at a Manhattan venue — clean, professional placement.</figcaption>
-          </figure>
           <div>
-            <h3 style="margin-top:0;">Built for high-volume venues</h3>
-            <p>Each Blue Sky ATM is a current-generation Hyosung-class machine with full contactless support, on-screen guidance, and capacity for high-traffic nights without running dry. We handle the install, the cabling, and the placement — you don't lift a finger.</p>
+            <h3 style="margin-top:0;">Tap-to-withdraw, in seconds</h3>
+            <p>Customers don't need to dig out a card. A tap of an iPhone, Apple Watch, or contactless card and they're at the PIN screen — typically <strong>under 5 seconds</strong> from approach to withdrawal. That speed compounds during peak hours when every second of line-time costs you tips and bar sales.</p>
             <ul style="line-height:1.7; padding-left:1.1rem;">
-              <li>Contactless Apple Pay, Google Pay & tap-to-withdraw</li>
+              <li>Apple Pay, Google Pay &amp; tap-to-withdraw</li>
               <li>EMV chip + magnetic stripe support</li>
               <li>Optional Bitcoin / digital asset purchasing</li>
               <li>Reinforced steel safe with anti-skim card reader</li>
             </ul>
-          </div>
-        </div>
-
-        <div class="media-split">
-          <div>
-            <h3 style="margin-top:0;">Tap-to-withdraw, in seconds</h3>
-            <p>Customers don't need to dig out a card. A tap of an iPhone, Apple Watch, or contactless card and they're at the PIN screen — typically <strong>under 5 seconds</strong> from approach to withdrawal. That speed compounds during peak hours when every second of line-time costs you tips and bar sales.</p>
             <p class="muted" style="margin-top:1rem;">The green light means ready. The wave-and-hand icon is the universal contactless symbol — the same one on every modern payment terminal.</p>
           </div>
           <figure class="media-figure">
